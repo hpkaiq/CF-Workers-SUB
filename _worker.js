@@ -46,6 +46,7 @@ export default {
 		let yxtls = url.searchParams.get('yxtls');
 		let yxnotls = url.searchParams.get('yxnotls');
 		let yxfd = url.searchParams.get('yxfd');
+		let unbase = url.searchParams.get('unbase');
 		if(!yxtls){
 		//yxtls='visa.cn'
 		//yxtls='bestcf.030101.xyz'
@@ -172,7 +173,15 @@ export default {
 				base64Data = encodeBase64(result);
 			}
 
-			if (订阅格式 == 'base64' || token == fakeToken){
+			if(unbase){
+				return new Response(result ,{
+					headers: { 
+						"content-type": "text/plain; charset=utf-8",
+						"Profile-Update-Interval": `${SUBUpdateTime}`,
+						"Subscription-Userinfo": `upload=${UD}; download=${UD}; total=${total}; expire=${expire}`,
+					}
+				});
+			} else if (订阅格式 == 'base64' || token == fakeToken){
 				return new Response(base64Data ,{
 					headers: { 
 						"content-type": "text/plain; charset=utf-8",
