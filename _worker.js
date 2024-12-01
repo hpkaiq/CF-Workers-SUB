@@ -42,7 +42,28 @@ export default {
 		FileName = env.SUBNAME || FileName;
 		MainData = env.LINK || MainData;
 		if(env.LINKSUB) urls = await ADD(env.LINKSUB);
-
+		
+		let yxtls = url.searchParams.get('yxtls');
+		let yxnotls = url.searchParams.get('yxnotls');
+		let yxfd = url.searchParams.get('yxfd');
+		if(!yxtls){
+		//yxtls='visa.cn'
+		//yxtls='bestcf.030101.xyz'
+		//yxtls='cf.090227.xyz'
+		yxtls='www.visa.com.hk'
+		}
+		if(!yxnotls){
+		yxnotls='www.visa.com.hk'
+		} 
+		if(!yxfd){
+		//yxfd='cffd.amtop.cn'
+		//yxfd='bestproxy.030101.xyz'
+		//yxfd='proxyip.aliyun.fxxk.dedyn.io'
+		yxfd='cffd1.pkme.fun'
+	        }
+		MainData = MainData.replace(/\${yxtls}/g, yxtls);
+		MainData = MainData.replace(/\${yxnotls}/g, yxnotls);
+		MainData = MainData.replace(/\${yxfd}/g, yxfd);
 		const currentDate = new Date();
 		currentDate.setHours(0, 0, 0, 0); 
 		const timeTemp = Math.ceil(currentDate.getTime() / 1000);
