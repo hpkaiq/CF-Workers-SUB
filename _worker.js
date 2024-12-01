@@ -145,6 +145,16 @@ export default {
 			const uniqueLines = new Set(text.split('\n'));
 			const result = [...uniqueLines].join('\n');
 			//console.log(result);
+
+			if(unbase){
+				return new Response(result ,{
+					headers: { 
+						"content-type": "text/plain; charset=utf-8",
+						"Profile-Update-Interval": `${SUBUpdateTime}`,
+						"Subscription-Userinfo": `upload=${UD}; download=${UD}; total=${total}; expire=${expire}`,
+					}
+				});
+			}
 			
 			let base64Data;
 			try {
@@ -173,15 +183,7 @@ export default {
 				base64Data = encodeBase64(result);
 			}
 
-			if(unbase){
-				return new Response(result ,{
-					headers: { 
-						"content-type": "text/plain; charset=utf-8",
-						"Profile-Update-Interval": `${SUBUpdateTime}`,
-						"Subscription-Userinfo": `upload=${UD}; download=${UD}; total=${total}; expire=${expire}`,
-					}
-				});
-			} else if (订阅格式 == 'base64' || token == fakeToken){
+			if (订阅格式 == 'base64' || token == fakeToken){
 				return new Response(base64Data ,{
 					headers: { 
 						"content-type": "text/plain; charset=utf-8",
